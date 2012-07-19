@@ -152,7 +152,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 
         /** Display stuff based on widget settings. */
         if ( $show_choices ) {
-            printf( __( '%1$s is in ... step to your %2$s', 'wpfa-sample' ), $choices, $optionals );
+            printf( '<span class="wpfa-sample-choices">' . __( '%1$s is in ... step to your %2$s', 'wpfa-sample' ) . '</span>', $choices, $optionals );
         } else {
             echo __( 'No appointments today.', 'wpfa-sample' );
         }
