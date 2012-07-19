@@ -141,6 +141,7 @@ class WPFA_Sample_Widget extends WP_Widget {
      *
      * @param   array $instance
      *
+     * @uses    __
      * @uses    _e
      * @uses    checked
      * @uses    get_field_id
@@ -176,8 +177,8 @@ class WPFA_Sample_Widget extends WP_Widget {
  		<p>
 			<label for="<?php echo $this->get_field_id( 'optionals' ); ?>"><?php _e( 'Options:', 'wpfa-sample' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'optionals' ); ?>" name="<?php echo $this->get_field_name( 'optionals' ); ?>" class="widefat" style="width:100%;">
-                <option <?php selected( 'right', $instance['sort_order'], true ); ?>>right</option>
-                <option <?php selected( 'left', $instance['sort_order'], true ); ?>>left</option>
+                <option <?php selected( 'right', $instance['optionals'], true ); ?>>right</option>
+                <option <?php selected( 'left', $instance['optionals'], true ); ?>>left</option>
 			</select>
 		</p>
 
