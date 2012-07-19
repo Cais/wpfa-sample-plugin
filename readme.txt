@@ -68,6 +68,8 @@ Please stay current with your WordPress installation, your active theme, and you
 == Changelog ==
 = 0.3 =
 * First public github release
+* Code format clean-up and updated documentation
+* Added better i18n support
 
 = 0.2 =
 * Updates to this and that
