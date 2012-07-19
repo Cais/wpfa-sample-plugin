@@ -45,10 +45,10 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /** Add function to the widgets_init hook. */
-add_action( 'widgets_init', 'load_my_wpfa_sample_widget' );
+add_action( 'widgets_init', 'load_wpfa_sample_widget' );
   
 /** Function that registers our widget. */
-function load_my_wpfa_sample_widget() {
+function load_wpfa_sample_widget() {
 	register_widget( 'WPFA_Sample_Widget' );
 }
 
@@ -58,12 +58,29 @@ class WPFA_Sample_Widget extends WP_Widget {
 	    /** Widget settings. */
   		$widget_ops = array( 'classname' => 'wpfa-sample', 'description' => __( 'Displays some stuff.', 'wpfa-sample' ) );
   		/** Widget control settings. */
-  		$control_ops = array( 'width' => 200, 'height' => 200, 'id_base' => 'wpfa-sample' );
+  		$control_ops = array( 'width' => 200, 'id_base' => 'wpfa-sample' );
   		/** Create the widget. */
   		$this->WP_Widget( 'wpfa-sample', 'WPFirstAid Sample', $widget_ops, $control_ops );
   	}
-	
-	function widget( $args, $instance ) {
+
+    /**
+     * Overrides widget method from WP_Widget class
+     * This is where the work is done
+     *
+     * @param   array $args
+     * @param   array $instance
+     *
+     * @var $before_widget string
+     * @var $after_widget string
+     * @var $before_title string
+     * @var $after_title string
+     * @var $title string
+     * @internal above vars are either drawn from the theme register_sidebar
+     * definition, or are drawn from the defaults in WordPress core.
+     *
+     * @uses    apply_filters
+     */
+    function widget( $args, $instance ) {
         extract( $args );
         /** User-selected settings. */
         $title        = apply_filters( 'widget_title', $instance['title'] );
@@ -75,11 +92,11 @@ class WPFA_Sample_Widget extends WP_Widget {
         /** @var $before_widget string - defined by theme */
         echo $before_widget;
 
-        /** Title of widget (before and after defined by themes). */
+        /** Widget title */
         if ( $title )
             /**
-             * @var $before_title   string - defined by theme
-             * @var $after_title    string - defined by theme
+             * @var $before_title string - defined by theme | WordPress core
+             * @var $after_title string - defined by theme | WordPress core
              */
             echo $before_title . $title . $after_title;
 
@@ -93,8 +110,19 @@ class WPFA_Sample_Widget extends WP_Widget {
         /** After widget (defined by themes). */
         echo $after_widget;
     }
-  
-	function update( $new_instance, $old_instance ) {
+
+    /**
+     * Overrides update method from WP_Widget class
+     *
+     * @package WPFA_Sample
+     * @since   0.1
+     *
+     * @param   array $new_instance
+     * @param   array $old_instance
+     *
+     * @return  array
+     */
+    function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
         /** Strip tags (if needed) and update the widget settings. */
         $instance['title']          = strip_tags( $new_instance['title'] );
