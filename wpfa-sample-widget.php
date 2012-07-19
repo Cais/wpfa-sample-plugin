@@ -44,6 +44,56 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+/**
+ * WPFA Sample TextDomain
+ * Make plugin text available for translation (i18n)
+ *
+ * @package WPFA_Sample
+ * @since   0.3
+ *
+ * @internal Translation files are expected to be found in the plugin root
+ * folder / directory.
+ */
+load_plugin_textdomain( 'wpfa-sample' );
+
+/**
+ * Check installed WordPress version for compatibility
+ *
+ * @package WPFA_Sample
+ * @since   0.3
+ *
+ * @internal Requires WordPress version 2.8
+ * @internal @uses WP_Widget
+ */
+global $wp_version;
+$exit_message = __( 'WPFA Sample Widget requires WordPress version 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>', 'wpfa-sample' );
+if ( version_compare( $wp_version, "2.8", "<" ) )
+    exit ( $exit_message );
+
+/**
+ * Enqueue Plugin Scripts and Styles
+ *
+ * Adds plugin stylesheet and allows for custom stylesheet to be added by end-user.
+ *
+ * @package WPFA_Sample
+ * @since   0.3
+ *
+ * @uses    plugin_dir_path
+ * @uses    plugin_dir_url
+ * @uses    wp_enqueue_style
+ *
+ * @internal Used with action: wp_enqueue_scripts
+ */
+function WPFA_Sample_Scripts_and_Styles() {
+    /** Enqueue Scripts */
+    /** Enqueue Style Sheets */
+    wp_enqueue_style( 'WPFA-Sample-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-style.css', array(), '0.3', 'screen' );
+    if ( is_readable( plugin_dir_path( __FILE__ ) . 'wpfa-sample-custom-style.css' ) ) {
+        wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-custom-style.css', array(), '0.3', 'screen' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'WPFA_Sample_Scripts_and_Styles' );
+
 /** Add function to the widgets_init hook. */
 add_action( 'widgets_init', 'load_wpfa_sample_widget' );
   
@@ -102,7 +152,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 
         /** Display stuff based on widget settings. */
         if ( $show_choices ) {
-            echo $choices . ' is in ... step to your ' . $optionals;
+            printf( __( '%1$s is in ... step to your %2$s', 'wpfa-sample' ), $choices, $optionals );
         } else {
             echo __( 'No appointments today.', 'wpfa-sample' );
         }

@@ -70,6 +70,8 @@ Please stay current with your WordPress installation, your active theme, and you
 * First public github release
 * Code format clean-up and updated documentation
 * Added better i18n support
+* Added WordPress version testing
+* Added stylesheet enqueue references
 
 = 0.2 =
 * Updates to this and that
