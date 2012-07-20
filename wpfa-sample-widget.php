@@ -244,6 +244,10 @@ class WPFA_Sample_Widget extends WP_Widget {
  *
  * @uses    the_widget
  * @uses    shortcode_atts
+ *
+ * @version 0.3
+ * @date    July 20, 2012
+ * Set title parameter to null for aesthetic purposes
  */
 function wpfa_sample_shortcode ( $atts ) {
     /** Start capture */
@@ -255,13 +259,15 @@ function wpfa_sample_shortcode ( $atts ) {
             'WPFA_Sample_Widget',
             $instance = shortcode_atts(
                 array(
-                    'title'         => __( 'WPFirstAid Sample', 'wpfa-sample' ),
+                    /** Set title to null for aesthetic reasons */
+                    'title'         => __( '', 'wpfa-sample' ),
                     'choices'       => __( 'The Doctor', 'wpfa-sample' ),
                     'show_choices'  => true,
                     'optionals'     => 'right',
                 ),
                 $atts
             ),
+            /** Set the widget arguments to null to clear theme related output */
             $args = array (
                 'before_widget'   => '',
                 'before_title'    => '',

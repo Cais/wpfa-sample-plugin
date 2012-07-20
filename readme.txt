@@ -24,7 +24,7 @@ Read this article for further assistance: http://wpfirstaid.com/2009/12/plugin-i
 = Shortcode: wpfa_sample =
 Parameters are very similar to the plugin:
 
-* 'title'           => __('WPFirstAid Sample'),
+* 'title'           => '',
 * 'choices'         => 'The Doctor',
 * 'show_choices'    => true,
 * 'optionals'       => 'right'
