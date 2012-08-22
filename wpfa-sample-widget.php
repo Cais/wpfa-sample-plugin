@@ -3,7 +3,7 @@
 Plugin Name: WPFirstAid Sample Widget
 Plugin URI: http://wpfirstaid.com
 Description: Plugin with multi-widget functionality that displays stuff ...
-Version: 0.3
+Version: 0.3.1
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Textdomain: wpfa-sample
@@ -69,6 +69,7 @@ global $wp_version;
 $exit_message = __( 'WPFA Sample Widget requires WordPress version 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>', 'wpfa-sample' );
 if ( version_compare( $wp_version, "2.8", "<" ) )
     exit ( $exit_message );
+/** End: Check installed WordPress version */
 
 /**
  * Enqueue Plugin Scripts and Styles
@@ -93,6 +94,7 @@ function WPFA_Sample_Scripts_and_Styles() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'WPFA_Sample_Scripts_and_Styles' );
+/** End: Enqueue Plugin Scripts and Styles */
 
 /** Add function to the widgets_init hook. */
 add_action( 'widgets_init', 'load_wpfa_sample_widget' );
@@ -102,8 +104,10 @@ function load_wpfa_sample_widget() {
 	register_widget( 'WPFA_Sample_Widget' );
 }
 
+/** Start Class Extension */
 class WPFA_Sample_Widget extends WP_Widget {
-  
+
+    /** Create Widget */
 	function WPFA_Sample_Widget() {
 	    /** Widget settings. */
   		$widget_ops = array( 'classname' => 'wpfa-sample', 'description' => __( 'Displays some stuff.', 'wpfa-sample' ) );
@@ -112,6 +116,7 @@ class WPFA_Sample_Widget extends WP_Widget {
   		/** Create the widget. */
   		$this->WP_Widget( 'wpfa-sample', 'WPFirstAid Sample', $widget_ops, $control_ops );
   	}
+    /** End: Create Widget */
 
     /**
      * Overrides widget method from WP_Widget class
@@ -160,6 +165,7 @@ class WPFA_Sample_Widget extends WP_Widget {
         /** After widget (defined by themes). */
         echo $after_widget;
     }
+    /** End: widget method override */
 
     /**
      * Overrides update method from WP_Widget class
@@ -182,6 +188,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 
         return $instance;
     }
+    /** End: update override */
 
     /**
      * Overrides form method from WP_Widget class
@@ -234,7 +241,10 @@ class WPFA_Sample_Widget extends WP_Widget {
 
 		<?php
 	}
+    /** End: form override */
 }
+/** End: Class extension */
+
 /**
  * WPFA Sample Shortcode
  * Adds shortcode functionality
@@ -285,3 +295,4 @@ function wpfa_sample_shortcode ( $atts ) {
 }
 /** Register shortcode */
 add_shortcode( 'wpfa_sample', 'wpfa_sample_shortcode' );
+/** End: WPFA Sample Shortcode */

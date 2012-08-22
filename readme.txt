@@ -3,8 +3,8 @@ Contributors: cais
 Donate link: http://buynowshop.com
 Tags: widget
 Requires at least: 2.8
-Tested up to: 3.4
-Stable tag: 0.3
+Tested up to: 3.4.1
+Stable tag: 0.3.1
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -66,6 +66,9 @@ A: Yes, this plugin has been made for multi-widget compatibility. Each instance 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.3.1 =
+* Added additional comments to better indicate sections within the code
+
 = 0.3 =
 * First public github release
 * Code format clean-up and updated documentation
