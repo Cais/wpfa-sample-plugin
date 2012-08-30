@@ -53,6 +53,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * @internal Translation files are expected to be found in the plugin root
  * folder / directory.
+ * @internal Using "Textdomain: wpfa-sample" in the plugin header section
+ * excludes the need for this function call.
  */
 load_plugin_textdomain( 'wpfa-sample' );
 
@@ -62,19 +64,23 @@ load_plugin_textdomain( 'wpfa-sample' );
  * @package WPFA_Sample
  * @since   0.3
  *
+ * @uses    (global) wp_version - current version of WordPress
+ *
  * @internal Requires WordPress version 2.8
  * @internal @uses WP_Widget
  */
 global $wp_version;
+/** @var $exit_message - message to be displayed by 'exit' function */
 $exit_message = __( 'WPFA Sample Widget requires WordPress version 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>', 'wpfa-sample' );
+/** Check required version versus current version  */
 if ( version_compare( $wp_version, "2.8", "<" ) )
     exit ( $exit_message );
 /** End: Check installed WordPress version */
 
 /**
  * Enqueue Plugin Scripts and Styles
- *
- * Adds plugin stylesheet and allows for custom stylesheet to be added by end-user.
+ * Adds plugin stylesheet and allows for custom stylesheet to be added by
+ * end-user. These stylesheets will only affect public facing output.
  *
  * @package WPFA_Sample
  * @since   0.3
@@ -83,12 +89,15 @@ if ( version_compare( $wp_version, "2.8", "<" ) )
  * @uses    plugin_dir_url
  * @uses    wp_enqueue_style
  *
- * @internal Used with action: wp_enqueue_scripts
+ * @internal JavaScripts, etc. would be added via this same function call using
+ * wp_enqueue_script functionality
+ * @internal Used with action hook: wp_enqueue_scripts
  */
 function WPFA_Sample_Scripts_and_Styles() {
     /** Enqueue Scripts */
     /** Enqueue Style Sheets */
     wp_enqueue_style( 'WPFA-Sample-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-style.css', array(), '0.3', 'screen' );
+    /** Check if custom stylesheet is readable (exists) */
     if ( is_readable( plugin_dir_path( __FILE__ ) . 'wpfa-sample-custom-style.css' ) ) {
         wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-custom-style.css', array(), '0.3', 'screen' );
     }
@@ -96,10 +105,10 @@ function WPFA_Sample_Scripts_and_Styles() {
 add_action( 'wp_enqueue_scripts', 'WPFA_Sample_Scripts_and_Styles' );
 /** End: Enqueue Plugin Scripts and Styles */
 
-/** Add function to the widgets_init hook. */
+/** Hook registered widget to the widgets_init action. */
 add_action( 'widgets_init', 'load_wpfa_sample_widget' );
-  
-/** Function that registers our widget. */
+
+/** Register the WP_Widget extended class. */
 function load_wpfa_sample_widget() {
 	register_widget( 'WPFA_Sample_Widget' );
 }
