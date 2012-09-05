@@ -6,7 +6,7 @@ Description: Plugin with multi-widget functionality that displays stuff ...
 Version: 0.3.1
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
-Textdomain: wpfa-sample
+Text Domain: wpfa-sample
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
