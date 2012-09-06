@@ -105,37 +105,18 @@ function WPFA_Sample_Scripts_and_Styles() {
 add_action( 'wp_enqueue_scripts', 'WPFA_Sample_Scripts_and_Styles' );
 /** End: Enqueue Plugin Scripts and Styles */
 
-/** ----------------------------------------------------------------------------
- * We need to take the widget code (read: the class WPFA_Sample_Widget that
- * extends the WP_Widget class) and register it as a widget. Once the widget is
- * registered it can be added to the widget initialization action.
- *
- * The following is more common practice than intuitive; the add_action call and
- * the function used to 'register_widget' can be placed after the actual class
- * code and it will still work correctly.
- */
-
-/** Hook registered widget to the widgets_init action. */
-add_action( 'widgets_init', 'load_wpfa_sample_widget' );
-
-/** Register the WP_Widget extended class. */
-function load_wpfa_sample_widget() {
-	register_widget( 'WPFA_Sample_Widget' );
-}
-/** End: register_widget and add to the widget_init call -------------------- */
-
 /** Start Class Extension */
 class WPFA_Sample_Widget extends WP_Widget {
 
     /** Create Widget */
-	function WPFA_Sample_Widget() {
-	    /** Widget settings. */
-  		$widget_ops = array( 'classname' => 'wpfa-sample', 'description' => __( 'Displays some stuff.', 'wpfa-sample' ) );
-  		/** Widget control settings. */
-  		$control_ops = array( 'width' => 200, 'id_base' => 'wpfa-sample' );
-  		/** Create the widget. */
-  		$this->WP_Widget( 'wpfa-sample', 'WPFirstAid Sample', $widget_ops, $control_ops );
-  	}
+    function WPFA_Sample_Widget() {
+        /** Widget settings. */
+        $widget_ops = array( 'classname' => 'wpfa-sample', 'description' => __( 'Displays some stuff.', 'wpfa-sample' ) );
+        /** Widget control settings. */
+        $control_ops = array( 'width' => 200, 'id_base' => 'wpfa-sample' );
+        /** Create the widget. */
+        $this->WP_Widget( 'wpfa-sample', 'WPFirstAid Sample', $widget_ops, $control_ops );
+    }
     /** End: Create Widget */
 
     /**
@@ -235,35 +216,54 @@ class WPFA_Sample_Widget extends WP_Widget {
             'optionals'     => 'right'
         );
         $instance = wp_parse_args( (array) $instance, $defaults ); ?>
-    
-		<p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'wpfa-sample' ); ?></label>
-            <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
-        </p>
 
-        <p>
-            <label for="<?php echo $this->get_field_id( 'choices' ); ?>"><?php _e( 'Make your choices:', 'wpfa-sample' ); ?></label>
-            <input id="<?php echo $this->get_field_id( 'choices' ); ?>" name="<?php echo $this->get_field_name( 'choices' ); ?>" value="<?php echo $instance['choices']; ?>" style="width:100%;" />
-        </p>
-  		
-  	    <p>
-            <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_choices'], true ); ?> id="<?php echo $this->get_field_id( 'show_choices' ); ?>" name="<?php echo $this->get_field_name( 'show_choices' ); ?>" />
-            <label for="<?php echo $this->get_field_id( 'show_choices' ); ?>"><?php _e( 'Show your choices?', 'wpfa-sample' ); ?></label>
-        </p>
-		
- 		<p>
-			<label for="<?php echo $this->get_field_id( 'optionals' ); ?>"><?php _e( 'Options:', 'wpfa-sample' ); ?></label>
-			<select id="<?php echo $this->get_field_id( 'optionals' ); ?>" name="<?php echo $this->get_field_name( 'optionals' ); ?>" class="widefat" style="width:100%;">
-                <option <?php selected( 'right', $instance['optionals'], true ); ?>>right</option>
-                <option <?php selected( 'left', $instance['optionals'], true ); ?>>left</option>
-			</select>
-		</p>
+    <p>
+        <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'wpfa-sample' ); ?></label>
+        <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+    </p>
 
-		<?php
-	}
+    <p>
+        <label for="<?php echo $this->get_field_id( 'choices' ); ?>"><?php _e( 'Make your choices:', 'wpfa-sample' ); ?></label>
+        <input id="<?php echo $this->get_field_id( 'choices' ); ?>" name="<?php echo $this->get_field_name( 'choices' ); ?>" value="<?php echo $instance['choices']; ?>" style="width:100%;" />
+    </p>
+
+    <p>
+        <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_choices'], true ); ?> id="<?php echo $this->get_field_id( 'show_choices' ); ?>" name="<?php echo $this->get_field_name( 'show_choices' ); ?>" />
+        <label for="<?php echo $this->get_field_id( 'show_choices' ); ?>"><?php _e( 'Show your choices?', 'wpfa-sample' ); ?></label>
+    </p>
+
+    <p>
+        <label for="<?php echo $this->get_field_id( 'optionals' ); ?>"><?php _e( 'Options:', 'wpfa-sample' ); ?></label>
+        <select id="<?php echo $this->get_field_id( 'optionals' ); ?>" name="<?php echo $this->get_field_name( 'optionals' ); ?>" class="widefat" style="width:100%;">
+            <option <?php selected( 'right', $instance['optionals'], true ); ?>>right</option>
+            <option <?php selected( 'left', $instance['optionals'], true ); ?>>left</option>
+        </select>
+    </p>
+
+    <?php
+    }
     /** End: form override */
 }
 /** End: Class extension */
+
+/** ----------------------------------------------------------------------------
+ * We need to take the widget code (read: the class WPFA_Sample_Widget that
+ * extends the WP_Widget class) and register it as a widget. Once the widget is
+ * registered it can be added to the widget initialization action.
+ *
+ * The following is more common practice than intuitive; the add_action call and
+ * the function used to 'register_widget' can be placed after the actual class
+ * code and it will still work correctly.
+ */
+
+/** Register the WP_Widget extended class. */
+function load_wpfa_sample_widget() {
+    register_widget( 'WPFA_Sample_Widget' );
+}
+
+/** Hook registered widget to the widgets_init action. */
+add_action( 'widgets_init', 'load_wpfa_sample_widget' );
+/** End: register_widget and add to the widget_init call -------------------- */
 
 /**
  * WPFA Sample Shortcode
