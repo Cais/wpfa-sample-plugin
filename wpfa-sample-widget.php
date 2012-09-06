@@ -126,8 +126,9 @@ class WPFA_Sample_Widget extends WP_Widget {
     /** End: Create Widget */
 
     /**
-     * Overrides widget method from WP_Widget class
-     * This is where the work is done
+     * Overrides 'widget' method from WP_Widget class
+     * Everything the widget is going to perform or display will be handled by
+     * this section.
      *
      * @param   array $args
      * @param   array $instance
@@ -175,7 +176,7 @@ class WPFA_Sample_Widget extends WP_Widget {
     /** End: widget method override */
 
     /**
-     * Overrides update method from WP_Widget class
+     * Overrides 'update' method from WP_Widget class
      *
      * @package WPFA_Sample
      * @since   0.1
@@ -198,7 +199,7 @@ class WPFA_Sample_Widget extends WP_Widget {
     /** End: update override */
 
     /**
-     * Overrides form method from WP_Widget class
+     * Overrides 'form' method from WP_Widget class
      *
      * @package WPFA_Sample
      * @since   0.1
