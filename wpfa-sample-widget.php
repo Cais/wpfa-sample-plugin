@@ -127,7 +127,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 
     /**
      * Overrides 'widget' method from WP_Widget class
-     * Everything the widget is going to perform or display will be handled by
+     * Everything the widget is going to output or display will be handled by
      * this section.
      *
      * @param   array $args
@@ -176,15 +176,21 @@ class WPFA_Sample_Widget extends WP_Widget {
     /** End: widget method override */
 
     /**
-     * Overrides 'update' method from WP_Widget class
+     * Update a particular instance of the widget.
+     *
+     * This function should check that $new_instance is set correctly. The newly
+     * calculated value of $instance should be returned. If "false" is returned,
+     * the instance won't be saved/updated.
      *
      * @package WPFA_Sample
      * @since   0.1
      *
+     * @internal override the 'update' method from WP_Widget class
+     *
      * @param   array $new_instance
      * @param   array $old_instance
      *
-     * @return  array
+     * @return  array - Settings to save or bool false to cancel saving
      */
     function update( $new_instance, $old_instance ) {
         $instance = $old_instance;
@@ -199,15 +205,18 @@ class WPFA_Sample_Widget extends WP_Widget {
     /** End: update override */
 
     /**
-     * Overrides 'form' method from WP_Widget class
+     * This function displays the widget option panel form used to update the
+     * widget settings.
      *
      * @package WPFA_Sample
      * @since   0.1
      *
+     * @internal override the 'form' method from WP_Widget class
+     *
      * @param   array $instance
      *
-     * @uses    __
-     * @uses    _e
+     * @uses    __ - to use text within another function
+     * @uses    _e - used to echo text to screen
      * @uses    checked
      * @uses    get_field_id
      * @uses    selected
