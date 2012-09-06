@@ -108,7 +108,13 @@ add_action( 'wp_enqueue_scripts', 'WPFA_Sample_Scripts_and_Styles' );
 /** Start Class Extension */
 class WPFA_Sample_Widget extends WP_Widget {
 
-    /** Create Widget */
+    /**
+     * Create Widget
+     * This creates the drag-and-drop block on the Appearance | Widgets panel.
+     * It can be placed in an appropriate widget area typically defined by the
+     * active theme. This also dictates the size (read: width) of the widget
+     * instance option panel.
+     */
     function WPFA_Sample_Widget() {
         /** Widget settings. */
         $widget_ops = array( 'classname' => 'wpfa-sample', 'description' => __( 'Displays some stuff.', 'wpfa-sample' ) );
