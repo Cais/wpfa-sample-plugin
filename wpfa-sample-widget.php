@@ -19,7 +19,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * @package     WPFA_Sample
  * @link        https://github.com/Cais/wpfa-sample
- * @version     0.3
+ * @version     0.3.1
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2010-2012, Edward Caissie
  *
@@ -233,22 +233,22 @@ class WPFA_Sample_Widget extends WP_Widget {
         );
         $instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
-    <p>
+    <p><!-- This (text field) is used to optionally change the title used by the widget -->
         <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'wpfa-sample' ); ?></label>
         <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
     </p>
 
-    <p>
+    <p><!-- This (text field) is used to (optionally) change the 'choices' option text -->
         <label for="<?php echo $this->get_field_id( 'choices' ); ?>"><?php _e( 'Make your choices:', 'wpfa-sample' ); ?></label>
         <input id="<?php echo $this->get_field_id( 'choices' ); ?>" name="<?php echo $this->get_field_name( 'choices' ); ?>" value="<?php echo $instance['choices']; ?>" style="width:100%;" />
     </p>
 
-    <p>
+    <p><!-- This (checkbox) is used to turn on or off if the message is displayed -->
         <input class="checkbox" type="checkbox" <?php checked( (bool) $instance['show_choices'], true ); ?> id="<?php echo $this->get_field_id( 'show_choices' ); ?>" name="<?php echo $this->get_field_name( 'show_choices' ); ?>" />
         <label for="<?php echo $this->get_field_id( 'show_choices' ); ?>"><?php _e( 'Show your choices?', 'wpfa-sample' ); ?></label>
     </p>
 
-    <p>
+    <p><!-- This (dropdown menu) is used to choose "right" or "left" -->
         <label for="<?php echo $this->get_field_id( 'optionals' ); ?>"><?php _e( 'Options:', 'wpfa-sample' ); ?></label>
         <select id="<?php echo $this->get_field_id( 'optionals' ); ?>" name="<?php echo $this->get_field_name( 'optionals' ); ?>" class="widefat" style="width:100%;">
             <option <?php selected( 'right', $instance['optionals'], true ); ?>>right</option>
