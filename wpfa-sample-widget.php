@@ -283,7 +283,9 @@ add_action( 'widgets_init', 'load_wpfa_sample_widget' );
 
 /**
  * WPFA Sample Shortcode
- * Adds shortcode functionality
+ * Adds shortcode functionality by using the PHP output buffer methods to
+ * capture `the_widget` output and return the data to be displayed via the use
+ * of the `wpfa_sample` shortcode.
  *
  * @package WPFA_Sample
  * @since   0.2
@@ -291,18 +293,28 @@ add_action( 'widgets_init', 'load_wpfa_sample_widget' );
  * @uses    the_widget
  * @uses    shortcode_atts
  *
+ * @internal used with add_shortcode
+ *
  * @version 0.3
  * @date    July 20, 2012
  * Set title parameter to null for aesthetic purposes
  */
 function wpfa_sample_shortcode ( $atts ) {
-    /** Start capture */
-    ob_start();
-    /** Using the_widget() to make a plugin template tag */ ?>
+    /** Start output buffer capture */
+    ob_start(); ?>
     <div class="wpfa-sample-shortcode">
         <?php
+        /**
+         * Use 'the_widget' as the main output function to be captured
+         * @link http://codex.wordpress.org/Function_Reference/the_widget
+         */
         the_widget(
+            /** The widget name as defined in the class extension */
             'WPFA_Sample_Widget',
+            /**
+             * The default options (as the shortcode attributes array) to be
+             * used with the widget
+             */
             $instance = shortcode_atts(
                 array(
                     /** Set title to null for aesthetic reasons */
@@ -313,7 +325,10 @@ function wpfa_sample_shortcode ( $atts ) {
                 ),
                 $atts
             ),
-            /** Set the widget arguments to null to clear theme related output */
+            /**
+             * Override the widget arguments and set to null. This will set the
+             * theme related widget definitions to null for aesthetic purposes.
+             */
             $args = array (
                 'before_widget'   => '',
                 'before_title'    => '',
@@ -322,11 +337,12 @@ function wpfa_sample_shortcode ( $atts ) {
             ) ); ?>
     </div><!-- .wpfa-sample-shortcode -->
     <?php
-    /** End the captured output routine */
+    /** End the output buffer capture and save captured data into variable */
     $wpfa_sample_output = ob_get_contents();
-    /** Stop capture */
+    /** Stop output buffer capture and clear properly */
     ob_end_clean();
 
+    /** Return the output buffer data for use with add_shortcode output */
     return $wpfa_sample_output;
 }
 /** Register shortcode */
