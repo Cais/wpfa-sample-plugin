@@ -11,7 +11,7 @@ License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-/**
+/** ----------------------------------------------------------------------------
  * WPFirstAid Sample Plugin for WordPress
  *
  * Plugin with multi-widget functionality that displays stuff ... and a lot more
@@ -44,7 +44,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-/**
+/** ----------------------------------------------------------------------------
  * WPFA Sample TextDomain
  * Make plugin text available for translation (i18n)
  *
@@ -58,7 +58,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 load_plugin_textdomain( 'wpfa-sample' );
 
-/**
+/** ----------------------------------------------------------------------------
  * Check installed WordPress version for compatibility
  *
  * @package WPFA_Sample
@@ -75,9 +75,9 @@ $exit_message = __( 'WPFA Sample Widget requires WordPress version 2.8 or newer.
 /** Check required version versus current version  */
 if ( version_compare( $wp_version, "2.8", "<" ) )
     exit ( $exit_message );
-/** End: Check installed WordPress version */
+/** End: Check installed WordPress version ---------------------------------- */
 
-/**
+/** ----------------------------------------------------------------------------
  * Enqueue Plugin Scripts and Styles
  * Adds plugin stylesheet and allows for custom stylesheet to be added by
  * end-user. These stylesheets will only affect public facing output.
@@ -103,12 +103,12 @@ function WPFA_Sample_Scripts_and_Styles() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'WPFA_Sample_Scripts_and_Styles' );
-/** End: Enqueue Plugin Scripts and Styles */
+/** End: Enqueue Plugin Scripts and Styles ---------------------------------- */
 
-/** Start Class Extension */
+/** Start Class Extension --------------------------------------------------- */
 class WPFA_Sample_Widget extends WP_Widget {
 
-    /**
+    /** ------------------------------------------------------------------------
      * Create Widget
      * This creates the drag-and-drop block on the Appearance | Widgets panel.
      * It can be placed in an appropriate widget area typically defined by the
@@ -123,9 +123,9 @@ class WPFA_Sample_Widget extends WP_Widget {
         /** Create the widget. */
         $this->WP_Widget( 'wpfa-sample', 'WPFirstAid Sample', $widget_ops, $control_ops );
     }
-    /** End: Create Widget */
+    /** End: Create Widget -------------------------------------------------- */
 
-    /**
+    /** ------------------------------------------------------------------------
      * Overrides 'widget' method from WP_Widget class
      * Everything the widget is going to output or display will be handled by
      * this section.
@@ -173,9 +173,9 @@ class WPFA_Sample_Widget extends WP_Widget {
         /** After widget (defined by themes). */
         echo $after_widget;
     }
-    /** End: widget method override */
+    /** End: widget method override ----------------------------------------- */
 
-    /**
+    /** ------------------------------------------------------------------------
      * Update a particular instance of the widget.
      *
      * This function should check that $new_instance is set correctly. The newly
@@ -202,9 +202,9 @@ class WPFA_Sample_Widget extends WP_Widget {
 
         return $instance;
     }
-    /** End: update override */
+    /** End: update override ------------------------------------------------ */
 
-    /**
+    /** ------------------------------------------------------------------------
      * This function displays the widget option panel form used to update the
      * widget settings.
      *
@@ -258,9 +258,9 @@ class WPFA_Sample_Widget extends WP_Widget {
 
     <?php
     }
-    /** End: form override */
+    /** End: form override -------------------------------------------------- */
 }
-/** End: Class extension */
+/** End: Class extension ---------------------------------------------------- */
 
 /** ----------------------------------------------------------------------------
  * We need to take the widget code (read: the class WPFA_Sample_Widget that
@@ -281,7 +281,7 @@ function load_wpfa_sample_widget() {
 add_action( 'widgets_init', 'load_wpfa_sample_widget' );
 /** End: register_widget and add to the widget_init call -------------------- */
 
-/**
+/** ----------------------------------------------------------------------------
  * WPFA Sample Shortcode
  * Adds shortcode functionality by using the PHP output buffer methods to
  * capture `the_widget` output and return the data to be displayed via the use
@@ -347,4 +347,4 @@ function wpfa_sample_shortcode ( $atts ) {
 }
 /** Register shortcode */
 add_shortcode( 'wpfa_sample', 'wpfa_sample_shortcode' );
-/** End: WPFA Sample Shortcode */
+/** End: WPFA Sample Shortcode ---------------------------------------------- */
