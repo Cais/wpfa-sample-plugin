@@ -99,7 +99,7 @@ function WPFA_Sample_Scripts_and_Styles() {
     wp_enqueue_style( 'WPFA-Sample-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-style.css', array(), '0.3', 'screen' );
     /** Check if custom stylesheet is readable (exists) */
     if ( is_readable( plugin_dir_path( __FILE__ ) . 'wpfa-sample-custom-style.css' ) ) {
-        wp_enqueue_style( 'BNSFC-Custom-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-custom-style.css', array(), '0.3', 'screen' );
+        wp_enqueue_style( 'WPFA-Sample-Custom-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-custom-style.css', array(), '0.3', 'screen' );
     }
 }
 add_action( 'wp_enqueue_scripts', 'WPFA_Sample_Scripts_and_Styles' );
