@@ -117,6 +117,9 @@ class WPFA_Sample_Widget extends WP_Widget {
 			)
 		);
 
+		/** Hook registered widget to the widgets_init action. */
+		add_action( 'widgets_init', array( $this, 'load_wpfa_sample_widget' ) );
+
 	}
 	/** End: Create Widget -------------------------------------------------- */
 
@@ -317,28 +320,28 @@ class WPFA_Sample_Widget extends WP_Widget {
 	<?php
 	}
 	/** End: form override -------------------------------------------------- */
+
+
+	/** ----------------------------------------------------------------------------
+	 * We need to take the widget code (read: the class WPFA_Sample_Widget that
+	 * extends the WP_Widget class) and register it as a widget. Once the widget is
+	 * registered it can be added to the widget initialization action.
+	 *
+	 * The following is more common practice than intuitive; the add_action call and
+	 * the function used to 'register_widget' can be placed after the actual class
+	 * code and it will still work correctly.
+	 */
+
+	/** Register the WP_Widget extended class. */
+	function load_wpfa_sample_widget() {
+		register_widget( 'WPFA_Sample_Widget' );
+	}
+
+
 }
 
 /** End: Class extension ---------------------------------------------------- */
 
-/** ----------------------------------------------------------------------------
- * We need to take the widget code (read: the class WPFA_Sample_Widget that
- * extends the WP_Widget class) and register it as a widget. Once the widget is
- * registered it can be added to the widget initialization action.
- *
- * The following is more common practice than intuitive; the add_action call and
- * the function used to 'register_widget' can be placed after the actual class
- * code and it will still work correctly.
- */
-
-/** Register the WP_Widget extended class. */
-function load_wpfa_sample_widget() {
-	register_widget( 'WPFA_Sample_Widget' );
-}
-
-/** Hook registered widget to the widgets_init action. */
-add_action( 'widgets_init', 'load_wpfa_sample_widget' );
-/** End: register_widget and add to the widget_init call -------------------- */
 
 /** ----------------------------------------------------------------------------
  * WPFA Sample Shortcode
