@@ -2,7 +2,7 @@
  * This file is part of WPFA Sample Widget
  * Last revised at version 0.3
  *
- * Copyright 2010-2012  Edward Caissie  (email : edward.caissie@gmail.com)
+ * Copyright 2010-2014  Edward Caissie  (email : edward.caissie@gmail.com)
  *
  * WPFA Sample Widget is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License, version 2, as published by
@@ -23,7 +23,7 @@
  *      Boston, MA  02110-1301  USA
  */
 span.wpfa-sample-choices {
-    font-style: italic;
-    font-weight: bold;
-    padding: 0 3px;
+	font-style: italic;
+	font-weight: bold;
+	padding: 0 3px;
 }

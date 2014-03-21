@@ -4,7 +4,7 @@ Donate link: http://buynowshop.com
 Tags: widget-only
 Requires at least: 2.8
 Tested up to: 3.4.2
-Stable tag: 0.3.1
+Stable tag: 0.4
 License: GNU General Public License v2
 License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -40,7 +40,7 @@ A: Yes, this plugin has been made for multi-widget compatibility. Each instance 
 1. The options panel as it appears in default.
 
 == Other Notes ==
-* Copyright 2010-2012  Edward Caissie  (email : edward.caissie@gmail.com)
+* Copyright 2010-2014  Edward Caissie  (email : edward.caissie@gmail.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2,
