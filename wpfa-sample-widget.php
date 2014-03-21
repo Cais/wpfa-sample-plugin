@@ -58,53 +58,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 load_plugin_textdomain( 'wpfa-sample' );
 
-/** ----------------------------------------------------------------------------
- * Check installed WordPress version for compatibility
- *
- * @package          WPFA_Sample
- * @since            0.3
- *
- * @uses    (global) wp_version - current version of WordPress
- *
- * @internal         Requires WordPress version 2.8
- * @internal         @uses WP_Widget
- */
-global $wp_version;
-/** @var $exit_message - message to be displayed by 'exit' function */
-$exit_message = __( 'WPFA Sample Widget requires WordPress version 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>', 'wpfa-sample' );
-/** Check required version versus current version  */
-if ( version_compare( $wp_version, "2.8", "<" ) ) {
-	exit ( $exit_message );
-}
-/** End: Check installed WordPress version ---------------------------------- */
 
-/** ----------------------------------------------------------------------------
- * Enqueue Plugin Scripts and Styles
- * Adds plugin stylesheet and allows for custom stylesheet to be added by
- * end-user. These stylesheets will only affect public facing output.
- *
- * @package  WPFA_Sample
- * @since    0.3
- *
- * @uses     plugin_dir_path
- * @uses     plugin_dir_url
- * @uses     wp_enqueue_style
- *
- * @internal JavaScripts, etc. would be added via this same function call using
- * wp_enqueue_script functionality
- * @internal Used with action hook: wp_enqueue_scripts
- */
-function WPFA_Sample_Scripts_and_Styles() {
-	/** Enqueue Scripts */
-	/** Enqueue Style Sheets */
-	wp_enqueue_style( 'WPFA-Sample-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-style.css', array(), '0.3', 'screen' );
-	/** Check if custom stylesheet is readable (exists) */
-	if ( is_readable( plugin_dir_path( __FILE__ ) . 'wpfa-sample-custom-style.css' ) ) {
-		wp_enqueue_style( 'WPFA-Sample-Custom-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-custom-style.css', array(), '0.3', 'screen' );
-	}
-}
-
-add_action( 'wp_enqueue_scripts', 'WPFA_Sample_Scripts_and_Styles' );
 /** End: Enqueue Plugin Scripts and Styles ---------------------------------- */
 
 /** Start Class Extension --------------------------------------------------- */
@@ -116,18 +70,118 @@ class WPFA_Sample_Widget extends WP_Widget {
 	 * It can be placed in an appropriate widget area typically defined by the
 	 * active theme. This also dictates the size (read: width) of the widget
 	 * instance option panel.
+	 *
+	 * This can be replaced with __construct() if using only PHP 5 or greater
+	 *
+	 * Used as a constructor function you can also add numerous other methods
+	 * into the function that should be called when the plugin is initialized.
 	 */
 	function WPFA_Sample_Widget() {
 		/** Widget settings. */
-		$widget_ops = array( 'classname'   => 'wpfa-sample',
-							 'description' => __( 'Displays some stuff.', 'wpfa-sample' )
+		$widget_ops = array(
+			'classname'   => 'wpfa-sample',
+			'description' => __( 'Displays some stuff.', 'wpfa-sample' )
 		);
 		/** Widget control settings. */
 		$control_ops = array( 'width' => 200, 'id_base' => 'wpfa-sample' );
 		/** Create the widget. */
 		$this->WP_Widget( 'wpfa-sample', 'WPFirstAid Sample', $widget_ops, $control_ops );
+
+		/** --------------------------------------------------------------------
+		 * Check installed WordPress version for compatibility
+		 *
+		 * @package          WPFA_Sample
+		 * @since            0.3
+		 *
+		 * @uses    (global) wp_version - current version of WordPress
+		 *
+		 * @internal         Requires WordPress version 2.8
+		 * @internal         @uses WP_Widget
+		 */
+		global $wp_version;
+		/** @var $exit_message - message to be displayed by 'exit' function */
+		$exit_message = __( 'WPFA Sample Widget requires WordPress version 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>', 'wpfa-sample' );
+
+		/** Check required version versus current version  */
+		if ( version_compare( $wp_version, "2.8", "<" ) ) {
+			exit ( $exit_message );
+		}
+		/** End if - version compare */
+		/** End: Check installed WordPress version -------------------------- */
+
+		/** Add Scripts and Styles */
+		add_action(
+			'wp_enqueue_scripts', array(
+				$this,
+				'Scripts_and_Styles'
+			)
+		);
+
 	}
 	/** End: Create Widget -------------------------------------------------- */
+
+
+	/**
+	 * Plugin Data
+	 * Returns the plugin header data as an array
+	 *
+	 * @package    WPFA_Sample
+	 * @since      0.4
+	 *
+	 * @uses       get_plugin_data
+	 *
+	 * @return array
+	 */
+	function plugin_data() {
+		/** Call the wp-admin plugin code */
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		/** @var $plugin_data - holds the plugin header data */
+		$plugin_data = get_plugin_data( __FILE__ );
+
+		return $plugin_data;
+	} /** End function - plugin data */
+
+
+	/** ------------------------------------------------------------------------
+	 * Enqueue Plugin Scripts and Styles
+	 * Adds plugin stylesheet and allows for custom stylesheet to be added by
+	 * end-user. These stylesheets will only affect public facing output.
+	 *
+	 * @package    WPFA_Sample
+	 * @since      0.3
+	 *
+	 * @uses       WPFA_Sample_Widget::plugin_data
+	 * @uses       plugin_dir_path
+	 * @uses       plugin_dir_url
+	 * @uses       wp_enqueue_style
+	 *
+	 * @internal   JavaScripts, etc. would be added via this same function call using
+	 * wp_enqueue_script functionality
+	 * @internal   Used with action hook: wp_enqueue_scripts
+	 *
+	 * @version    0.4
+	 * @date       March 20, 2014
+	 * Added call to `plugin_data` method to make versions dynamic in the enqueue calls
+	 */
+	function Scripts_and_Styles() {
+		/** Get plugin data and save in its own variable */
+		$wpfa_plugin_data = $this->plugin_data();
+
+		/** Enqueue Scripts */
+		/** Nothing to see here, yet. */
+
+		/** Enqueue Style Sheets */
+		wp_enqueue_style( 'WPFA-Sample-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-style.css', array(), $wpfa_plugin_data['Version'], 'screen' );
+
+		/** Check if custom stylesheet is readable (exists) */
+		if ( is_readable( plugin_dir_path( __FILE__ ) . 'wpfa-sample-custom-style.css' ) ) {
+			wp_enqueue_style( 'WPFA-Sample-Custom-Style', plugin_dir_url( __FILE__ ) . 'wpfa-sample-custom-style.css', array(), $wpfa_plugin_data['Version'], 'screen' );
+		}
+		/** End if - is readable */
+
+	}
+	/** End: Enqueue Scripts and Styles ------------------------------------- */
+
 
 	/** ------------------------------------------------------------------------
 	 * Overrides 'widget' method from WP_Widget class

@@ -66,11 +66,14 @@ A: Yes, this plugin has been made for multi-widget compatibility. Each instance 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.4 =
+* Added call to `plugin_data` method to make versions dynamic in the enqueue calls
+
 = 0.3.1 =
 * Added additional comments to better indicate sections within the code
 
 = 0.3 =
-* First public github release
+* First public GitHub release
 * Code format clean-up and updated documentation
 * Added better i18n support
 * Added WordPress version testing
