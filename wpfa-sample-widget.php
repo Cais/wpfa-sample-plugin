@@ -122,7 +122,12 @@ class WPFA_Sample_Widget extends WP_Widget {
 		add_shortcode( 'wpfa_sample', array( $this, 'wpfa_sample_shortcode' ) );
 
 		/** Add Plugin Row Meta */
-		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_row_meta' ), 10, 2 );
+		add_filter(
+			'plugin_row_meta', array(
+				$this,
+				'add_plugin_row_meta'
+			), 10, 2
+		);
 
 		/** Hook registered widget to the widgets_init action. */
 		add_action( 'widgets_init', array( $this, 'load_wpfa_sample_widget' ) );
@@ -425,6 +430,8 @@ class WPFA_Sample_Widget extends WP_Widget {
 	 * @param    $links
 	 * @param    $file
 	 *
+	 * @uses       plugin_basename
+	 *
 	 * @return array|null
 	 */
 	function add_plugin_row_meta( $links, $file ) {
@@ -452,9 +459,11 @@ class WPFA_Sample_Widget extends WP_Widget {
 			 * the new elements were added at the same time.
 			 */
 
-		} /** End if - plugin file name matched passed value */
+		}
+		/** End if - plugin file name matched passed value */
 
 		/** Return the `$link` array for use in the `plugin_row_meta hook` */
+
 		return $links;
 
 	} /** End function - add plugin row meta */
