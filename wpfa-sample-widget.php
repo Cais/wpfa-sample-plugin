@@ -3,7 +3,7 @@
 Plugin Name: WPFirstAid Sample Widget
 Plugin URI: http://wpfirstaid.com
 Description: Plugin with multi-widget functionality that displays stuff ...
-Version: 0.4
+Version: 0.5
 Author: Edward Caissie
 Author URI: http://edwardcaissie.com/
 Text Domain: wpfa-sample
@@ -19,7 +19,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * @package     WPFA_Sample
  * @link        https://github.com/Cais/wpfa-sample
- * @version     0.4
+ * @version     0.5
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2010-2014, Edward Caissie
  *
@@ -120,6 +120,9 @@ class WPFA_Sample_Widget extends WP_Widget {
 
 		/** Register shortcode */
 		add_shortcode( 'wpfa_sample', array( $this, 'wpfa_sample_shortcode' ) );
+
+		/** Add Plugin Row Meta */
+		add_filter( 'plugin_row_meta', array( $this, 'add_plugin_row_meta' ), 10, 2 );
 
 		/** Hook registered widget to the widgets_init action. */
 		add_action( 'widgets_init', array( $this, 'load_wpfa_sample_widget' ) );
@@ -405,8 +408,57 @@ class WPFA_Sample_Widget extends WP_Widget {
 	} /** End function - sample shortcode */
 
 
-	/** ------------------------------------------------------------------------
+	/**
+	 * Plugin Row Meta
+	 * Add plugin row meta by merging array elements into the existing $links
+	 * array which will then add these elements to the end of the standard
+	 * plugin row meta details.
+	 *
+	 * Also to note, this will not appear while the plugin is not active.
+	 *
+	 * @package    WPFA_Sample_Widget
+	 * @since      0.5
+	 * @date       March 22, 2014
+	 *
+	 * @internal   for use with `plugin_row_meta` hook
+	 *
+	 * @param    $links
+	 * @param    $file
+	 *
+	 * @return array|null
 	 */
+	function add_plugin_row_meta( $links, $file ) {
+
+		/** Get the plugin file name for reference */
+		$plugin_file = plugin_basename( __FILE__ );
+
+		/** Check if $plugin_file matches the passed $file name */
+		if ( $file == $plugin_file ) {
+
+			/**
+			 * Using `array_merge` add elements to the `$link` array to be
+			 * returned. Identifying the link elements in the array will make
+			 * them clearer if the need arises to review the array entries.
+			 */
+
+			/** @var array $links - sample element linking to GitHub to share code */
+			$links = array_merge( $links, array( 'fork_link' => '<a href="https://github.com/Cais/wpfa-sample-plugin">' . __( 'Fork on Github', 'wpfa-sample' ) . '</a>' ) );
+			/** @var array $links - sample element linking to my personal (Edward Caissie) Amazon wish list. Thanks in advance! */
+			$links = array_merge( $links, array( 'wish_link' => '<a href="http://www.amazon.ca/registry/wishlist/2NNNE1PAQIRUL">' . __( 'Grant a wish?', 'bns-fc' ) . '</a>' ) );
+
+			/**
+			 * Separate entries were used for example purposes. A single call to
+			 * the `array_merge` function would have worked as well where all of
+			 * the new elements were added at the same time.
+			 */
+
+		} /** End if - plugin file name matched passed value */
+
+		/** Return the `$link` array for use in the `plugin_row_meta hook` */
+		return $links;
+
+	} /** End function - add plugin row meta */
+
 
 	/**
 	 * Register the WP_Widget extended class.

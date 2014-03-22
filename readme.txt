@@ -66,6 +66,9 @@ A: Yes, this plugin has been made for multi-widget compatibility. Each instance 
 Please stay current with your WordPress installation, your active theme, and your plugins.
 
 == Changelog ==
+= 0.5 =
+* Add plugin meta row data via filter hook
+
 = 0.4 =
 * Added call to `plugin_data` method to make versions dynamic in the enqueue calls
 * Moved widget load hook call into constructor class

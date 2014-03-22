@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="WPFA">
+    <serverData>
+      <paths name="WPFA">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/wp-admin" local="$PROJECT_DIR$/../../../wp-admin" web="/wp-admin" />
+            <mapping deploy="/wp-content/plugins/wpfa-sample-widget" local="$PROJECT_DIR$" web="/wp-content/plugins/wpfa-sample-widget" />
+            <mapping deploy="/wp-includes" local="$PROJECT_DIR$/../../../wp-includes" web="/wp-includes" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/../../../wp-admin" />
+            <excludedPath local="true" path="$PROJECT_DIR$/../../../wp-includes" />
+            <excludedPath path="/wp-admin" />
+            <excludedPath path="/wp-includes" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
+
