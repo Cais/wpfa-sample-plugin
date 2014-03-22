@@ -71,6 +71,7 @@ Please stay current with your WordPress installation, your active theme, and you
 * Moved widget load hook call into constructor class
 * Moved all functions into class for better containment
 * Updated required version to 3.6 to use `shortcode_atts` optional filter
+* Minor documentation updates and code formatting to meet current WordPress Coding Standards
 
 = 0.3.1 =
 * Added additional comments to better indicate sections within the code

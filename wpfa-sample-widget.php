@@ -162,13 +162,12 @@ class WPFA_Sample_Widget extends WP_Widget {
 	 * @uses       plugin_dir_url
 	 * @uses       wp_enqueue_style
 	 *
-	 * @internal   JavaScripts, etc. would be added via this same function call using
-	 * wp_enqueue_script functionality
+	 * @internal   JavaScripts, etc. would be added via this same function call using wp_enqueue_script functionality
 	 * @internal   Used with action hook: wp_enqueue_scripts
 	 *
 	 * @version    0.4
 	 * @date       March 20, 2014
-	 * Added call to `plugin_data` method to make versions dynamic in the enqueue calls
+	 * Added call to `plugin_data` method for dynamic version numbering
 	 */
 	function Scripts_and_Styles() {
 		/** Get plugin data and save in its own variable */
@@ -203,9 +202,9 @@ class WPFA_Sample_Widget extends WP_Widget {
 	 * @var           $before_title  string
 	 * @var           $after_title   string
 	 * @var           $title         string
-	 * @internal above vars are either drawn from the theme register_sidebar
-	 * definition, or are drawn from the defaults in WordPress core.
+	 * @internal above vars are either drawn from the theme register_sidebar definition, or are drawn from the defaults in WordPress core.
 	 *
+	 * @uses     __
 	 * @uses     apply_filters
 	 */
 	function widget( $args, $instance ) {
@@ -240,6 +239,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 	}
 	/** End: widget method override ----------------------------------------- */
 
+
 	/** ------------------------------------------------------------------------
 	 * Update a particular instance of the widget.
 	 *
@@ -269,6 +269,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 	}
 	/** End: update override ------------------------------------------------ */
 
+
 	/** ------------------------------------------------------------------------
 	 * This function displays the widget option panel form used to update the
 	 * widget settings.
@@ -284,6 +285,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 	 * @uses     _e - used to echo text to screen
 	 * @uses     checked
 	 * @uses     get_field_id
+	 * @uses     get_field_name
 	 * @uses     selected
 	 *
 	 * @return  string|void
@@ -313,7 +315,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'show_choices' ); ?>"><?php _e( 'Show your choices?', 'wpfa-sample' ); ?></label>
 		</p>
 
-		<p><!-- This (dropdown menu) is used to choose "right" or "left" -->
+		<p><!-- This (drop down menu) is used to choose "right" or "left" -->
 			<label for="<?php echo $this->get_field_id( 'optionals' ); ?>"><?php _e( 'Options:', 'wpfa-sample' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'optionals' ); ?>" name="<?php echo $this->get_field_name( 'optionals' ); ?>" class="widefat" style="width:100%;">
 				<option <?php selected( 'right', $instance['optionals'], true ); ?>>right</option>
@@ -326,11 +328,11 @@ class WPFA_Sample_Widget extends WP_Widget {
 	/** End: form override -------------------------------------------------- */
 
 
-	/** ----------------------------------------------------------------------------
+	/** ------------------------------------------------------------------------
 	 * WPFA Sample Shortcode
 	 * Adds shortcode functionality by using the PHP output buffer methods to
-	 * capture `the_widget` output and return the data to be displayed via the use
-	 * of the `wpfa_sample` shortcode.
+	 * capture `the_widget` output and return the data to be displayed via the
+	 * use of the `wpfa_sample` shortcode.
 	 *
 	 * @package    WPFA_Sample
 	 * @since      0.2
@@ -386,6 +388,7 @@ class WPFA_Sample_Widget extends WP_Widget {
 					'after_widget'  => ''
 				)
 			); ?>
+
 		</div><!-- .wpfa-sample-shortcode -->
 
 		<?php
@@ -402,20 +405,31 @@ class WPFA_Sample_Widget extends WP_Widget {
 	} /** End function - sample shortcode */
 
 
-	/** ----------------------------------------------------------------------------
-	 * We need to take the widget code (read: the class WPFA_Sample_Widget that
-	 * extends the WP_Widget class) and register it as a widget. Once the widget is
-	 * registered it can be added to the widget initialization action.
-	 *
-	 * The following is more common practice than intuitive; the add_action call and
-	 * the function used to 'register_widget' can be placed after the actual class
-	 * code and it will still work correctly.
+	/** ------------------------------------------------------------------------
 	 */
 
-	/** Register the WP_Widget extended class. */
+	/**
+	 * Register the WP_Widget extended class.
+	 *
+	 * We need to take the widget code (read: the class WPFA_Sample_Widget that
+	 * extends the WP_Widget class) and register it as a widget. Once the widget
+	 * is registered it can be added to the widget initialization action.
+	 *
+	 * The following is more common practice than intuitive; the add_action call
+	 * and the function used to 'register_widget' can be placed after the actual
+	 * class code and it will still work correctly.
+	 *
+	 * @package    WPFA_Sample_Widget
+	 * @since      0.1
+	 *
+	 * @uses       register_widget
+	 */
 	function load_wpfa_sample_widget() {
+
 		register_widget( 'WPFA_Sample_Widget' );
+
 	}
+	/** End function - load sample widget */
 
 
 }
