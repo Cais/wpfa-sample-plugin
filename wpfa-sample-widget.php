@@ -119,7 +119,12 @@ class WPFA_Sample_Widget extends WP_Widget {
 		);
 
 		/** Register shortcode */
-		add_shortcode( 'wpfa_sample', array( $this, 'wpfa_sample_shortcode' ) );
+		add_shortcode(
+			'wpfa_sample', array(
+				$this,
+				'wpfa_sample_shortcode'
+			)
+		);
 
 		/** Add Plugin Row Meta */
 		add_filter(
