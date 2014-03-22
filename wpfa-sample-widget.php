@@ -19,7 +19,7 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * @package     WPFA_Sample
  * @link        https://github.com/Cais/wpfa-sample
- * @version     0.3.1
+ * @version     0.4
  * @author      Edward Caissie <edward.caissie@gmail.com>
  * @copyright   Copyright (c) 2010-2014, Edward Caissie
  *
@@ -95,15 +95,16 @@ class WPFA_Sample_Widget extends WP_Widget {
 		 *
 		 * @uses    (global) wp_version - current version of WordPress
 		 *
-		 * @internal         Requires WordPress version 2.8
-		 * @internal         @uses WP_Widget
+		 * @internal         Requires WordPress version 3.6
+		 * @internal         @uses shortcode_atts
+		 * @internal         @link https://codex.wordpress.org/Function_Reference/shortcode_atts
 		 */
 		global $wp_version;
 		/** @var $exit_message - message to be displayed by 'exit' function */
-		$exit_message = __( 'WPFA Sample Widget requires WordPress version 2.8 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>', 'wpfa-sample' );
+		$exit_message = __( 'WPFA Sample Widget requires WordPress version 3.6 or newer. <a href="http://codex.wordpress.org/Upgrading_WordPress">Please Update!</a>', 'wpfa-sample' );
 
 		/** Check required version versus current version  */
-		if ( version_compare( $wp_version, "2.8", "<" ) ) {
+		if ( version_compare( $wp_version, "3.6", "<" ) ) {
 			exit ( $exit_message );
 		}
 		/** End if - version compare */
@@ -116,6 +117,9 @@ class WPFA_Sample_Widget extends WP_Widget {
 				'Scripts_and_Styles'
 			)
 		);
+
+		/** Register shortcode */
+		add_shortcode( 'wpfa_sample', array( $this, 'wpfa_sample_shortcode' ) );
 
 		/** Hook registered widget to the widgets_init action. */
 		add_action( 'widgets_init', array( $this, 'load_wpfa_sample_widget' ) );
@@ -323,6 +327,82 @@ class WPFA_Sample_Widget extends WP_Widget {
 
 
 	/** ----------------------------------------------------------------------------
+	 * WPFA Sample Shortcode
+	 * Adds shortcode functionality by using the PHP output buffer methods to
+	 * capture `the_widget` output and return the data to be displayed via the use
+	 * of the `wpfa_sample` shortcode.
+	 *
+	 * @package    WPFA_Sample
+	 * @since      0.2
+	 *
+	 * @uses       the_widget
+	 * @uses       shortcode_atts
+	 *
+	 * @internal   used with add_shortcode
+	 *
+	 * @version    0.3
+	 * @date       July 20, 2012
+	 * Set title parameter to null for aesthetic purposes
+	 *
+	 * @version    0.4
+	 * @date       March 22, 2014
+	 * Added filter parameter
+	 */
+	function wpfa_sample_shortcode( $atts ) {
+		/** Start output buffer capture */
+		ob_start(); ?>
+		<div class="wpfa-sample-shortcode">
+
+			<?php
+			/**
+			 * Use 'the_widget' as the main output function to be captured
+			 * @link http://codex.wordpress.org/Function_Reference/the_widget
+			 */
+			the_widget(
+			/** The widget name as defined in the class extension */
+				'WPFA_Sample_Widget',
+				/**
+				 * The default options (as the shortcode attributes array) to be
+				 * used with the widget
+				 */
+				$instance = shortcode_atts(
+					array(
+						/** Set title to null for aesthetic reasons */
+						'title'        => __( '', 'wpfa-sample' ),
+						'choices'      => __( 'The Doctor', 'wpfa-sample' ),
+						'show_choices' => true,
+						'optionals'    => 'right',
+					),
+					$atts, 'wpfa_sample'
+				),
+				/**
+				 * Override the widget arguments and set to null. This will set the
+				 * theme related widget definitions to null for aesthetic purposes.
+				 */
+				$args = array(
+					'before_widget' => '',
+					'before_title'  => '',
+					'after_title'   => '',
+					'after_widget'  => ''
+				)
+			); ?>
+		</div><!-- .wpfa-sample-shortcode -->
+
+		<?php
+		/** End the output buffer capture and save captured data into variable */
+		$wpfa_sample_output = ob_get_contents();
+
+		/** Stop output buffer capture and clear properly */
+		ob_end_clean();
+
+		/** Return the output buffer data for use with add_shortcode output */
+
+		return $wpfa_sample_output;
+
+	} /** End function - sample shortcode */
+
+
+	/** ----------------------------------------------------------------------------
 	 * We need to take the widget code (read: the class WPFA_Sample_Widget that
 	 * extends the WP_Widget class) and register it as a widget. Once the widget is
 	 * registered it can be added to the widget initialization action.
@@ -343,73 +423,5 @@ class WPFA_Sample_Widget extends WP_Widget {
 /** End: Class extension ---------------------------------------------------- */
 
 
-/** ----------------------------------------------------------------------------
- * WPFA Sample Shortcode
- * Adds shortcode functionality by using the PHP output buffer methods to
- * capture `the_widget` output and return the data to be displayed via the use
- * of the `wpfa_sample` shortcode.
- *
- * @package  WPFA_Sample
- * @since    0.2
- *
- * @uses     the_widget
- * @uses     shortcode_atts
- *
- * @internal used with add_shortcode
- *
- * @version  0.3
- * @date     July 20, 2012
- * Set title parameter to null for aesthetic purposes
- */
-function wpfa_sample_shortcode( $atts ) {
-	/** Start output buffer capture */
-	ob_start(); ?>
-	<div class="wpfa-sample-shortcode">
-		<?php
-		/**
-		 * Use 'the_widget' as the main output function to be captured
-		 * @link http://codex.wordpress.org/Function_Reference/the_widget
-		 */
-		the_widget(
-		/** The widget name as defined in the class extension */
-			'WPFA_Sample_Widget',
-			/**
-			 * The default options (as the shortcode attributes array) to be
-			 * used with the widget
-			 */
-			$instance = shortcode_atts(
-				array(
-					/** Set title to null for aesthetic reasons */
-					'title'        => __( '', 'wpfa-sample' ),
-					'choices'      => __( 'The Doctor', 'wpfa-sample' ),
-					'show_choices' => true,
-					'optionals'    => 'right',
-				),
-				$atts
-			),
-			/**
-			 * Override the widget arguments and set to null. This will set the
-			 * theme related widget definitions to null for aesthetic purposes.
-			 */
-			$args = array(
-				'before_widget' => '',
-				'before_title'  => '',
-				'after_title'   => '',
-				'after_widget'  => ''
-			)
-		); ?>
-	</div><!-- .wpfa-sample-shortcode -->
-	<?php
-	/** End the output buffer capture and save captured data into variable */
-	$wpfa_sample_output = ob_get_contents();
-	/** Stop output buffer capture and clear properly */
-	ob_end_clean();
-
-	/** Return the output buffer data for use with add_shortcode output */
-
-	return $wpfa_sample_output;
-}
-
-/** Register shortcode */
-add_shortcode( 'wpfa_sample', 'wpfa_sample_shortcode' );
-/** End: WPFA Sample Shortcode ---------------------------------------------- */
+/** @var object $wpfa_sample_widget - instantiate class */
+$wpfa_sample_widget = new WPFA_Sample_Widget();
